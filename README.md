@@ -1,8 +1,5 @@
 # NutriSLM — North India Nutrition & Deficiency Advisor
 
-> A sub-1B parameter language model fine-tuned on North Indian dietary patterns for personalized micronutrient deficiency management.  
-> **100% open-source · zero paid APIs · runs on free Google Colab T4 GPU**
-
 ---
 
 ## Table of contents
