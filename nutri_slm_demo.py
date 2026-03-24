@@ -1,21 +1,3 @@
-"""
-NutriSLM — North India Nutrition & Deficiency Advisor
-======================================================
-Qwen3-0.6B | QLoRA fine-tuning | 100% open-source | zero paid APIs
-
-Run on Google Colab (T4 GPU, free tier):
-  Runtime > Change runtime type > T4 GPU
-  Then: python nutri_slm_demo.py
-
-Or run section by section — each SECTION block is self-contained.
-
-Total runtime on T4: ~55 min
-  Install       :  ~3 min
-  Data gen      :  ~1 min
-  Model load    :  ~6 min
-  Fine-tuning   : ~40 min  (3 epochs, 5400 examples)
-  Gradio launch :  ~1 min
-"""
 
 import subprocess, sys
 
@@ -24,16 +6,13 @@ import subprocess, sys
 # =============================================================================
 
 def install():
-    # Step 1: bitsandbytes CUDA wheel (--prefer-binary picks prebuilt CUDA .so)
     subprocess.check_call([
         sys.executable, "-m", "pip", "install", "-q",
         "bitsandbytes>=0.43.0", "--prefer-binary",
     ])
-    # Step 2: triton (required by bitsandbytes 4-bit kernels)
     subprocess.check_call([
         sys.executable, "-m", "pip", "install", "-q", "triton",
     ])
-    # Step 3: rest of the stack
     subprocess.check_call([
         sys.executable, "-m", "pip", "install", "-q",
         "transformers==4.51.3", "peft==0.14.0", "trl==0.13.0",
@@ -41,11 +20,9 @@ def install():
         "gradio==5.9.1", "sentence-transformers==3.3.1",
         "faiss-cpu==1.9.0", "mlflow==2.19.0",
     ])
-    # Verify CUDA build was picked up
     import bitsandbytes as bnb
     if not hasattr(bnb.nn, "Linear4bit"):
         print("WARNING: bitsandbytes CUDA build not detected.")
-        print("  Go to Runtime > Disconnect and delete runtime, then re-run.")
     else:
         print("All packages installed — bitsandbytes CUDA build OK")
 
@@ -58,8 +35,6 @@ install()
 
 import json
 
-# Each entry: name, hinglish_name, diet_types, deficiencies,
-#             season, region_tags, portion, nutrients (per 100g)
 
 FOOD_DB = [
     # ── IRON ──────────────────────────────────────────────────────────────────
@@ -789,18 +764,5 @@ with gr.Blocks(title="NutriSLM", theme=gr.themes.Soft()) as demo:
         summary_out = gr.Markdown()
         refresh_btn.click(show_summary, [], summary_out)
 
-# share=True gives a public link valid for 72 hours
 demo.launch(share=True)
 
-
-# =============================================================================
-# SECTION 9 — (Optional) Push adapter to HuggingFace Hub
-# =============================================================================
-
-# Uncomment and fill in your token to publish:
-#
-# from huggingface_hub import login
-# login(token="hf_YOUR_TOKEN_HERE")
-# model.push_to_hub("your-username/NutriSLM-Qwen3-0.6B-NorthIndia")
-# tokenizer.push_to_hub("your-username/NutriSLM-Qwen3-0.6B-NorthIndia")
-# print("Model pushed to HuggingFace Hub!")
