@@ -1,25 +1,5 @@
 # NutriSLM — North India Nutrition & Deficiency Advisor
 
----
-
-## Table of contents
-
-1. [Overview](#overview)
-2. [System flowchart](#system-flowchart)
-3. [Features](#features)
-4. [Project structure](#project-structure)
-5. [Quick start](#quick-start)
-6. [How it works](#how-it-works)
-7. [Food database](#food-database)
-8. [Training details](#training-details)
-9. [Gradio app](#gradio-app)
-10. [Known issues & fixes](#known-issues--fixes)
-11. [Roadmap](#roadmap)
-12. [Research angle](#research-angle)
-13. [Contributing](#contributing)
-14. [License](#license)
-
----
 
 ## Overview
 
